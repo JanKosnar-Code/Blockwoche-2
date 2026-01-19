@@ -1,0 +1,7 @@
+Debuggen
+
+Mit F9 kann man eine Zeile markieren die wenn man mit dem Debugger startet dann sozusagen das ende des codes markiert bis man F10 drückt und der code weitergeht. zeigt einem Informationen über die variablen an.
+
+- F9: Markieren der Zeilen für das Debuggen
+- F10: Nächster Step (Springt in die Nächste Zeile und Überspringt Funktionen)
+- F11: Step Over (Springt in die Nächste Zeile Überspringt jedoch nicht die Funktion und macht dann in der Funktion weiter)
