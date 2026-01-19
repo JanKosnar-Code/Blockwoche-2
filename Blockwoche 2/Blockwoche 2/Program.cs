@@ -9,9 +9,9 @@ class Program
         Console.WriteLine($"Hallo Der herr/ Die Dame. Wie heißt du und wie alt bist du?");
 
         Console.WriteLine("Name: ");
-        name = Console.ReadLine();
+        name = Console.ReadLine() ?? "Deafault Benutzer";
 
-        if (name == "Ende")
+        if (name.ToLower().Trim() == "Ende")
         {
             return;
         }
@@ -19,27 +19,29 @@ class Program
         Console.WriteLine("Alter: ");
         alter = Convert.ToInt32(Console.ReadLine());
 
-        Funktion(alter);
+        Console.WriteLine($"Hallo {name}, du darfst {1}hinein", Funktion(alter) ? "" : "Nicht ");
 
-        if (Funktion(alter) == true)
+        /* Im prinzip das selbe aber Länger
+         * if (Funktion(alter) == true)
         {
-            Console.WriteLine("Du darfst rein.");
+            Console.WriteLine($"Du darfst rein {name}.");
         }
         else
         {
-            Console.WriteLine("Du bist zu Jung");
+            Console.WriteLine($"Du bist zu Jung {name}.");
         }
+        */
     }
 
     static bool Funktion(int alter)
     {
-        if (alter >= 18)
-        {
+        return alter >= 18;
+
+        /* Im prinzip das selbe aber Länger
+        if(alter >= 18)
             return true;
-        }
         else
-        {
             return false;
-        }
+        */
     }
 }
