@@ -1,75 +1,87 @@
-﻿class Program
+﻿ /* Iterativ Variante 1
+class Program
 {
     static void Main(string[] args)
     {
-        double Gewicht;
-        double Größe;
-        double BMIE;
+        int ergebnis;
+        int zwischen;
 
-        string? name;
-        string? Geschlecht;
+        int a = 0;
+        int b = 1;
 
-        Console.WriteLine("Hallo. Wie heißt du?");
-        name = Console.ReadLine() ?? "Deafault Benutzer";
-        Console.WriteLine($"Ah, {name}, Wieviel wiegst du?");
-        Gewicht = Convert.ToDouble(Console.ReadLine());
-        Console.WriteLine("Wie Groß bist du?");
-        Größe = Convert.ToDouble(Console.ReadLine());
-        Console.WriteLine("Dein Geschlecht?");
-        Geschlecht = Console.ReadLine();
-
-        Geschlecht!.ToLower();
-
-        BMIE = Rechner(Gewicht, Größe);
-
-        BMI(BMIE, Geschlecht);
-    }
-    static double Rechner(double Ge, double Gr)
-    {
-        double zwischen1;
-        double ergebnis;
-
-        zwischen1 = Gr * Gr;
-        ergebnis = Ge / zwischen1;
-        Math.Round(ergebnis, 2);
-
-        // Console.WriteLine(ergebnis);
-        // Console.WriteLine(zwischen1);
-
-        return ergebnis;
-    }
-
-    static void BMI(double bmi, string Gs)
-    {
-        if (Gs == "mänlich" || Gs == "mann")
+        for (int i = 0; i < 11; i++)
         {
-            if (bmi < 18.5)
-                Console.WriteLine("Du bist Untergewichtig");
-            else if (bmi >= 18.5 && bmi < 24.9)
-                Console.WriteLine("Du hast das Normalgewicht");
-            else if (bmi >= 25 && bmi < 29.9)
-                Console.WriteLine("Du bist Übergewichtig");
-            else if (bmi >= 30 && bmi < 34.9)
-                Console.WriteLine("Du hast Adipositas Grad I");
-            else if (bmi >= 35 && bmi < 39.9)
-                Console.WriteLine("Du hast Adipositas Grad II");
-            else if (bmi > 40)
-                Console.WriteLine("Du hast Adipositas Grad III");
+            if (i == 0)
+            {
+                Console.WriteLine(a);
+                Console.WriteLine(b);
+                i += 2;
+            }
+
+            ergebnis = a + b;
+            zwischen = a;
+            a = b;
+            b = ergebnis;
+            Console.WriteLine(b);
         }
-        else
+    }
+}
+*/
+/* Iterativ Variante 2
+class Program
+{
+    static void Main(string[] args)
+    {
+        int ergebnis;
+        int zwischen;
+
+        int a = 0;
+        int b = 0;
+
+        for (int i = 0; i < 11; i++)
         {
-            if (bmi < 17.5)
-                Console.WriteLine("Du bist Untergewichtig");
-            else if (bmi >= 17.5 && bmi < 23.9)
-                Console.WriteLine("Du hast das Normalgewicht");
-            else if (bmi >= 24 && bmi < 28.9)
-                Console.WriteLine("Du bist Übergewichtig");
-            else if (bmi >= 29 && bmi < 33.9)
-                Console.WriteLine("Du hast Adipositas Grad I");
-            else if (bmi >= 34 && bmi < 38.9)
-                Console.WriteLine("Du hast Adipositas Grad II");
-            else if (bmi > 39)
-                Console.WriteLine("Du hast Adipositas Grad III");
+            if (a == 0)
+            {
+                Console.WriteLine(a);
+                i++;
+            }
+
+
+            if (b == 0)
+            {
+                b += 1;
+                Console.WriteLine(b);
+                i++;
+            }
+
+            ergebnis = a + b;
+            zwischen = a;
+            a = b;
+            b = ergebnis;
+            Console.WriteLine(b);
         }
+    }
+}
+*/
+/* Rekursiv */
+class Program
+{
+    static void Main(string[] args)
+    {
+        int a = 0;
+        int b = 1;
+        int c = 0;
+        int l = 11;
+
+        Rekursion(a, b, l);
+    }
+
+    static void Rekursion(int zahl1, int zahl2, int depth)
+    {
+        if (depth == 0) 
+            return;
+
+        Console.WriteLine(zahl1);
+        Rekursion(zahl2, zahl1 + zahl2, depth - 1);
     }
 }
