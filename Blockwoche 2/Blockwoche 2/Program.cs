@@ -2,32 +2,32 @@
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main(string[] args) 
     {
         string message;
-        string? Input;
+        string? PlayerInput;
 
         bool canParse;
 
-        int lose = 0;
-        int win = 0;
+        int loses = 0;
+        int wins = 0;
 
         while (true)
         {
             Console.WriteLine("Spiel Starten?");
-            Input = Console.ReadLine();
+            PlayerInput = Console.ReadLine();
 
-            if (Input == null)
+            if (PlayerInput == null)
                 Console.WriteLine("Falsche eingabe! null wird nicht Aktzeptiert!");
             else
             {
-                Input = Input!.ToLower();
+                PlayerInput = PlayerInput!.ToLower();
 
                 Eingabe Eingabe = Eingabe.none;
-                canParse = Enum.TryParse(Input, out Eingabe);
+                canParse = Enum.TryParse(PlayerInput, out Eingabe);
 
                 if (Eingabe == Eingabe.none)
-                    Console.WriteLine("Nein Nein Nein so Darf das nicht sein!");
+                    Console.WriteLine("Falsche Eingabe!");
                 else if (Eingabe == Eingabe.nein)
                 {
                     Console.WriteLine("Danke für das Spielen!");
@@ -35,87 +35,87 @@ class Program
                 }
                 else if (Eingabe == Eingabe.ja)
                 {
-                    Console.WriteLine($"Deine stats: {win} wins, {lose} loses");
+                    Console.WriteLine($"Deine stats: {wins} wins, {loses} loses");
                     message = Spiel(Eingabe);
                     if (message == "1L")
-                        lose++;
+                        loses++;
                     else if (message == "1W")
-                        win++;
+                        wins++;
                 }
             }
         }
     }
 
-    static string Spiel(Eingabe en)
+    static string Spiel(Eingabe en) // Das main Game
     {
-        string? Input; // Player Input
+        string? PlayerInput;
 
-        string EInput; // Enemy Input
+        string EnemyInput;
 
         bool canParse;
 
-        int zahl = 0;
+        // int zahl = 0; // Delete Me
 
-        int Ppoints = 0; // Player Points
-        int Epoints = 0; // Enempy Points
+        int PlayerPoints = 0;
+        int EnemyPoints = 0;
 
-        int OPpoints = 0; // Original Player Points
-        int OEpoints = 0; // Original Enemy Points
+        int OriginalPlayerPoints = 0;
+        int OriginalEnemyPoints = 0;
 
         do
         {
-            Console.WriteLine($"Punkte zum Gewinnen: {Ppoints}/{Epoints}");
+            Console.WriteLine($"Punkte zum Gewinnen: {PlayerPoints}/{EnemyPoints}");
             Console.WriteLine("Schere, Stein, Papier, Echse, Spock?");
-            Input = Console.ReadLine();
+            PlayerInput = Console.ReadLine();
 
-            if (Input == null)
+            if (PlayerInput == null)
                 Console.WriteLine("Falsche eingabe! null wird nicht Aktzeptiert!");
             else
             {
-                Input = Input!.ToLower();
+                PlayerInput = PlayerInput!.ToLower();
 
                 SpielVariablen SpielVariablen = SpielVariablen.none;
-                canParse = Enum.TryParse(Input, out SpielVariablen);
+                canParse = Enum.TryParse(PlayerInput, out SpielVariablen);
 
-                Random rnd = new Random(); // Delete Me
+                //Random rnd = new Random(); // Delete Me
 
                 if (!canParse)
                     Console.WriteLine("Fehler, Falsche eingabe!");
                 if (canParse)
                 {
-                    //EInput = KI();
-                    zahl = rnd.Next(1, 6); // Delete Me
+                    EnemyInput = KI();
+                    //zahl = rnd.Next(1, 6); // Delete Me
 
-                    EInput = ((SpielVariablen)zahl).ToString(); // Delete Me
+                    //EnemyInput = ((SpielVariablen)zahl).ToString(); // Delete Me
 
-                    Console.WriteLine($"Deine eingabe: {Input}, Eingabe des gegners: {EInput}");
+                    Console.WriteLine($"Deine eingabe: {PlayerInput}, Eingabe des gegners: {EnemyInput}");
 
                     bool PWin =
-                        (Input == "stein" && (EInput == "schere" || EInput == "echse")) ||
-                        (Input == "echse" && (EInput == "spock" || EInput == "papier")) ||
-                        (Input == "spock" && (EInput == "schere" || EInput == "stein")) ||
-                        (Input == "schere" && (EInput == "papier" || EInput == "echse")) ||
-                        (Input == "papier" && (EInput == "stein" || EInput == "spock"));
+                        (PlayerInput == "stein" && (EnemyInput == "schere" || EnemyInput == "echse")) ||
+                        (PlayerInput == "echse" && (EnemyInput == "spock" || EnemyInput == "papier")) ||
+                        (PlayerInput == "spock" && (EnemyInput == "schere" || EnemyInput == "stein")) ||
+                        (PlayerInput == "schere" && (EnemyInput == "papier" || EnemyInput == "echse")) ||
+                        (PlayerInput == "papier" && (EnemyInput == "stein" || EnemyInput == "spock"));
 
-                    if (Input == EInput)
+                    if (PlayerInput == EnemyInput)
                         Console.WriteLine("Unentschieden");
                     else if (PWin)
-                        Ppoints++;
+                        PlayerPoints++;
                     else
-                        Epoints++;
+                        EnemyPoints++;
 
-                    KIRechner(EInput, OEpoints, OPpoints, Epoints, Ppoints);
+                    KIRechner(EnemyInput, OriginalEnemyPoints, OriginalPlayerPoints, EnemyPoints, PlayerPoints);
 
-                    OPpoints = Ppoints;  
-                    
-                    OEpoints = Epoints;
+                    OriginalPlayerPoints = PlayerPoints;
 
-                    if (Epoints == 3)
+                    OriginalEnemyPoints = EnemyPoints;
+
+                    if (EnemyPoints == 3)
                     {
                         Console.WriteLine("Du hast verloren! + 1 Lose");
                         return "1L";
                     }
-                    else if (Ppoints == 3)
+                    else if (PlayerPoints == 3)
                     {
                         Console.WriteLine("Du hast Gewonnen! + 1 Win");
                         return "1W";
@@ -125,7 +125,7 @@ class Program
         } while (true);
     }
 
-    /*static string KI()
+    static string KI() // Der Zweite teil der KI: Kümmert sich um die random berechnungen
     {
         int zahl;
         int zahl2;
@@ -133,7 +133,7 @@ class Program
         int KleinsteZahl;
 
         string trennzeichen = ", ";
-        string Ei = "";
+        string EnemyInput = "";
 
         Random rnd = new Random();
 
@@ -146,32 +146,40 @@ class Program
         GrößteZahl = Counting.Max();
         KleinsteZahl = Counting.Min();
 
+        Console.WriteLine($"Größte Zahl: {GrößteZahl}, Kleinste Zahl: {KleinsteZahl}");
+
         for (int i = 0; i <= GrößteZahl; i++)
         {
-            zahl = rnd.Next(0, 5);
+            zahl = rnd.Next(1, 5);
+
+            Console.WriteLine("Erste Random Zahl: " + zahl);
 
             if (Counting[zahl] == KleinsteZahl)
             {
                 zahl2 = rnd.Next(1, 3);
+
+                Console.WriteLine("Zweite Random Zahl: " + zahl2);
+
                 if (zahl2 == 2)
                 {
-                    Ei = ((SpielVariablen)Counting[zahl]).ToString();
+                    EnemyInput = ((SpielVariablen)zahl).ToString();
                 }
             }
             else if (Counting[zahl] == GrößteZahl)
             {
-                Ei = ((SpielVariablen)Counting[zahl]).ToString();
-                return (Ei);
+                EnemyInput = ((SpielVariablen)zahl).ToString();
+                return (EnemyInput);
             }
-            else
-            {
-                Ei = ((SpielVariablen)Counting[zahl]).ToString();
-            }
-        }
-        return Ei;
-    }*/
+            EnemyInput = ((SpielVariablen)zahl).ToString();
 
-    static void KIRechner(string Ei, int OEP, int OPP, int EP, int PP)
+            Console.WriteLine("Schleifen Wiederholungen: " + (i + 1));
+        }
+        Console.WriteLine("Gegner input: " + EnemyInput);
+
+        return EnemyInput;
+    }
+
+    static void KIRechner(string EnemyInput, int OriginalEnemyPoints, int OriginalPlayerPoints, int EnemyPoints, int PlayerPoints) // Der erste Teil der KI: Verteilt die Belohnungen
     {
         int schere;
         int stein;
@@ -191,30 +199,30 @@ class Program
         schere = Convert.ToInt32(Count[0]); stein = Convert.ToInt32(Count[1]); papier = Convert.ToInt32(Count[2]);
         echse = Convert.ToInt32(Count[3]); spock = Convert.ToInt32(Count[4]);
 
-        if (EP > OEP) 
+        if (EnemyPoints > OriginalEnemyPoints) 
         {
-            if (Ei == "schere")
+            if (EnemyInput == "schere")
                 schere += 1;
-            else if (Ei == "stein")
+            else if (EnemyInput == "stein")
                 stein += 1;
-            else if (Ei == "papier")
+            else if (EnemyInput == "papier")
                 papier += 1;
-            else if (Ei == "echse")
+            else if (EnemyInput == "echse")
                 echse += 1;
-            else if (Ei == "spock")
+            else if (EnemyInput == "spock")
                 spock += 1;
         }
-        else if (PP > OPP)
+        else if (PlayerPoints > OriginalPlayerPoints)
         {
-            if (Ei == "schere")
+            if (EnemyInput == "schere")
                 schere -= 1;
-            else if (Ei == "stein")
+            else if (EnemyInput == "stein")
                 stein -= 1;
-            else if (Ei == "papier")
+            else if (EnemyInput == "papier")
                 papier -= 1;
-            else if (Ei == "echse")
+            else if (EnemyInput == "echse")
                 echse -= 1;
-            else if (Ei == "spock")
+            else if (EnemyInput == "spock")
                 spock -= 1;
         }
 
