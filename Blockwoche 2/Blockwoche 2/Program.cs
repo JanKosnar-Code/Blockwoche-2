@@ -95,12 +95,12 @@ class Program
 
                 if (Epoints == 3)
                 {
-                    Console.WriteLine("Du hast verloren! + 1 Lose");
+                    Console.WriteLine("Du hast verloren! + 1 Lose.");
                     return "1L";
                 }
                 else if (Ppoints == 3)
                 {
-                    Console.WriteLine("Du hast Gewonnen! + 1 Win");
+                    Console.WriteLine("Du hast Gewonnen! + 1 Win.");
                     return "1W";
                 }
             }
