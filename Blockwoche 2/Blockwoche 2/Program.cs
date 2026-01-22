@@ -99,18 +99,19 @@ class Program
 
                     KIRechner(EInput);
 
-                if (Epoints == 3)
-                {
-                    Console.WriteLine("Du hast verloren! + 1 Lose");
-                    return "1L";
-                }
-                else if (Ppoints == 3)
-                {
-                    Console.WriteLine("Du hast Gewonnen! + 1 Win");
-                    return "1W";
+                    if (Epoints == 3)
+                    {
+                        Console.WriteLine("Du hast verloren! + 1 Lose");
+                        return "1L";
+                    }
+                    else if (Ppoints == 3)
+                    {
+                        Console.WriteLine("Du hast Gewonnen! + 1 Win");
+                        return "1W";
+                    }
                 }
             }
-        }
+        } while (true);
     }
 
     static void KI()
@@ -132,7 +133,7 @@ class Program
 
         string[] Count = Inhalt.Split(trennzeichen);
 
-        foreach (string s in Count) 
+        foreach (string s in Count)
         {
             Console.WriteLine(s);
         }
