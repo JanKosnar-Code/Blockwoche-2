@@ -12,30 +12,36 @@ class Program
         int lose = 0;
         int win = 0;
 
-        while (true) 
+        while (true)
         {
             Console.WriteLine("Spiel Starten?");
-            Input = Console.ReadLine(); 
-            Input = Input!.ToLower();
+            Input = Console.ReadLine();
 
-            Eingabe Eingabe = Eingabe.none;
-            canParse = Enum.TryParse(Input, out Eingabe);
+            if (Input == null)
+                Console.WriteLine("Falsche eingabe! null wird nicht Aktzeptiert!");
+            else
+            {
+                Input = Input!.ToLower();
 
-            if (Eingabe == Eingabe.none)
-                Console.WriteLine("Nein Nein Nein so Darf das nicht sein!");
-            else if (Eingabe == Eingabe.nein)
-            {
-                Console.WriteLine("Danke für das Spielen!");
-                break;
-            }
-            else if (Eingabe == Eingabe.ja)
-            {
+                Eingabe Eingabe = Eingabe.none;
+                canParse = Enum.TryParse(Input, out Eingabe);
+
+                if (Eingabe == Eingabe.none)
+                    Console.WriteLine("Nein Nein Nein so Darf das nicht sein!");
+                else if (Eingabe == Eingabe.nein)
+                {
+                    Console.WriteLine("Danke für das Spielen!");
+                    break;
+                }
+                else if (Eingabe == Eingabe.ja)
+                {
                     Console.WriteLine($"Deine stats: {win} wins, {lose} loses");
-                message = Spiel(Eingabe);
-                if (message == "1L")
-                    lose++;
-                else if (message == "1W")
-                    win++;
+                    message = Spiel(Eingabe);
+                    if (message == "1L")
+                        lose++;
+                    else if (message == "1W")
+                        win++;
+                }
             }
         }
     }
@@ -53,63 +59,89 @@ class Program
 
         Random rnd = new Random();
 
-        while (true) 
+        do
         {
-           
-
             Console.WriteLine($"Punkte zum Gewinnen: {Ppoints}/{Epoints}");
             Console.WriteLine("Schere, Stein, Papier, Echse, Spock?");
             Input = Console.ReadLine();
-            Input = Input!.ToLower();
 
-            SpielVariablen SpielVariablen = SpielVariablen.none;
-            canParse = Enum.TryParse(Input, out SpielVariablen);
-
-            if (!canParse)
-                Console.WriteLine("Fehler, Falsche eingabe!");
-            if (canParse)
+            if (Input == null)
+                Console.WriteLine("Falsche eingabe! null wird nicht Aktzeptiert!");
+            else
             {
-                zahl = rnd.Next(1, 6);
-                string EInput = ((SpielVariablen)zahl).ToString();
+                Input = Input!.ToLower();
 
-                Console.WriteLine($"Deine eingabe: {Input}, Eingabe des gegners: {EInput}");
+                SpielVariablen SpielVariablen = SpielVariablen.none;
+                canParse = Enum.TryParse(Input, out SpielVariablen);
 
-                bool PWin =
-                    (Input == "stein" && (EInput == "schere" || EInput == "echse")) ||
-                    (Input == "echse" && (EInput == "spock" || EInput == "papier")) ||
-                    (Input == "spock" && (EInput == "schere" || EInput == "stein")) ||
-                    (Input == "schere" && (EInput == "papier" || EInput == "echse")) ||
-                    (Input == "papier" && (EInput == "stein" || EInput == "spock"));
-
-                if (Input == EInput)
-                    Console.WriteLine("Unentschieden");
-                else if (PWin) 
+                if (!canParse)
+                    Console.WriteLine("Fehler, Falsche eingabe!");
+                if (canParse)
                 {
-                    Ppoints++;
-                }
-                else
-                {
-                    Epoints++;
-                }
+                    zahl = rnd.Next(1, 6);
+                    string EInput = ((SpielVariablen)zahl).ToString();
 
+                    Console.WriteLine($"Deine eingabe: {Input}, Eingabe des gegners: {EInput}");
+
+                    bool PWin =
+                        (Input == "stein" && (EInput == "schere" || EInput == "echse")) ||
+                        (Input == "echse" && (EInput == "spock" || EInput == "papier")) ||
+                        (Input == "spock" && (EInput == "schere" || EInput == "stein")) ||
+                        (Input == "schere" && (EInput == "papier" || EInput == "echse")) ||
+                        (Input == "papier" && (EInput == "stein" || EInput == "spock"));
+
+                    if (Input == EInput)
+                        Console.WriteLine("Unentschieden");
+                    else if (PWin)
+                        Ppoints++;
+                    else
+                        Epoints++;
+
+                    KIRechner(EInput);
 
                 if (Epoints == 3)
                 {
-                    Console.WriteLine("Du hast verloren! + 1 Lose.");
+                    Console.WriteLine("Du hast verloren! + 1 Lose");
                     return "1L";
                 }
                 else if (Ppoints == 3)
                 {
-                    Console.WriteLine("Du hast Gewonnen! + 1 Win.");
+                    Console.WriteLine("Du hast Gewonnen! + 1 Win");
                     return "1W";
                 }
             }
         }
     }
+
+    static void KI()
+    {
+
+    }
+    static void KIRechner(string Ei)
+    {
+        int schere;
+        int stein;
+        int papier;
+        int echse;
+        int spock;
+
+        char[] trennzeichen = { ' ', ',' };
+
+        string Pfad = "C:\\Users\\Student\\Blockwoche-2\\Informationen\\KIScore.txt";
+        string Inhalt = File.ReadAllText(Pfad);
+
+        string[] Count = Inhalt.Split(trennzeichen);
+
+        foreach (string s in Count) 
+        {
+            Console.WriteLine(s);
+        }
+    }
+
     enum Eingabe
     {
-        none, 
-        ja, 
+        none,
+        ja,
         nein
     }
     enum SpielVariablen
